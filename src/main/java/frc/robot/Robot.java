@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.Timer;
 
 
 /**
@@ -21,13 +22,15 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private final RDriveTrain drivetrain = new RDriveTrain();
+  private final DriveTrain drivetrain = new DriveTrain();
   private final ballLoader loader = new ballLoader();
   private final XboxController controller = new XboxController(0);
+  private final Timer timer = new Timer();
 
-  private int speedChange = 25;
   private double rot;
   private double speed;
+
+  private boolean drove = false;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -72,12 +75,25 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    drivetrain.resetEncoders();
+    // drivetrain.resetEncoders();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    if (timer.get() < 2.0 & drove == false) {
+      DriveTrain.arcadeDrive(0.5, 0.0); // drive forwards half speed
+    } else {
+      DriveTrain.arcadeDrive(0.0, 0.0); // stop robot
+      drove = true;
+    }
+    if (timer.get() < 1 & drove == true) {
+      loader.setSpeed(0.5);
+    } else {
+      loader.setSpeed(0.0);
+    }
+
+  }
 
   @Override
   public void teleopInit() {
@@ -93,9 +109,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    if (speedChange < 25) {
-      speedChange += 1;
-    }
     if (controller.getX(Hand.kRight) >= 0.1 | controller.getX(Hand.kRight) <= -0.1) {
       rot = controller.getX(Hand.kRight);
     } else {
@@ -105,11 +118,18 @@ public class Robot extends TimedRobot {
       speed = controller.getY(Hand.kLeft);
     } else {
       speed = 0;
-      if (speedChange > 1) {
-        speedChange -= 2;
-      }
     }
-    RDriveTrain.arcadeDrive(-speed-speedChange, -rot);
+    if (speed >= 0.7) {
+      speed = 0.7;
+    } else if (speed <= -0.7) {
+      speed = -0.7;
+    }
+    if (rot >= 0.7) {
+      rot = 0.7;
+    } else if (rot <= -0.7) {
+      rot = -0.7;
+    }
+    DriveTrain.arcadeDrive(-speed, -rot);
     
     loader.setSpeed(-controller.getTriggerAxis(Hand.kRight));
   }
