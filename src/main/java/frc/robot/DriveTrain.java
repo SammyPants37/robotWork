@@ -36,6 +36,9 @@ public class DriveTrain {
       diffDrive.arcadeDrive(speed, rotation);
   }
 
+  public static void stop() {
+    diffDrive.stopMotor();
+  }
   // public double getLeftDistanceInch() {
   //   return LEncoder.getDistance();
   // }

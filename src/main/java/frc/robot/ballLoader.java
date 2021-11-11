@@ -8,4 +8,8 @@ public class ballLoader {
   public void setSpeed(double speed) {
     Motor.setSpeed(speed);
   }
+
+  public void stop() {
+    Motor.stopMotor();
+  }
 }
