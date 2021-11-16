@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
   private double rot;
   private double speed;
 
-  private boolean drove = false;
+  // private boolean drove = false;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -84,18 +84,18 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    if (timer.get() < 2.0 & drove == false) {
-      DriveTrain.arcadeDrive(0.7, 0.0); // drive forwards half speed
+    if (timer.get() < 2.0) {// & drove == false) {
+      DriveTrain.arcadeDrive(0.5, 0.0); // drive forwards half speed
     } else {
       DriveTrain.stop(); // stop robot
-      drove = true;
+      // drove = true;
       timer.reset();
     }
-    if (timer.get() < 1.0 & drove == true) {
-      loader.setSpeed(0.7);
-    } else {
-      loader.stop();
-    }
+    // if (timer.get() < 1.0 & drove == true) {
+    //   loader.setSpeed(0.7);
+    // } else {
+    //   loader.stop();
+    // }
 
   }
 
