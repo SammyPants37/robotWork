@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystem.DriveTrain;
+import frc.robot.subsystem.ballLoader;
 import edu.wpi.first.wpilibj.Timer;
 
 
@@ -22,13 +24,15 @@ import edu.wpi.first.wpilibj.Timer;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private final DriveTrain drivetrain = new DriveTrain();
-  private final ballLoader loader = new ballLoader();
+  private static DriveTrain drivetrain; // = new DriveTrain();
+  private static ballLoader ballLoader; // = new ballLoader();
   private final XboxController controller = new XboxController(0);
   private final Timer timer = new Timer();
 
   private double rot;
   private double speed;
+
+  private autoCommand autoCommand = autonomous;
 
   // private boolean drove = false;
 
@@ -42,6 +46,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     timer.reset();
     timer.start();
+    
+    drivetrain = new DriveTrain();
+    ballLoader = new ballLoader();
   }
 
   /**
@@ -84,17 +91,12 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    if (timer.get() < 2.0) {// & drove == false) {
-      DriveTrain.arcadeDrive(0.7, 0.0); // drive forwards half speed
-    } else {
-      DriveTrain.stop(); // stop robot
-      // drove = true;
-      // timer.reset();
-    }
-    // if (timer.get() < 1.0 & drove == true) {
-    //   loader.setSpeed(0.7);
+    // if (timer.get() < 2.0) {// & drove == false) {
+    //   DriveTrain.arcadeDrive(0.7, 0.0); // drive forwards half speed
     // } else {
-    //   loader.stop();
+    //   DriveTrain.stop(); // stop robot
+    //   // drove = true;
+    //   // timer.reset();
     // }
 
   }
@@ -135,7 +137,7 @@ public class Robot extends TimedRobot {
     }
     DriveTrain.arcadeDrive(-speed, -rot);
     
-    loader.setSpeed(-controller.getTriggerAxis(Hand.kRight));
+    ballLoader.setSpeed(-controller.getTriggerAxis(Hand.kRight));
   }
 
   @Override
