@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   private double rot;
   private double speed;
 
-  private autoCommand autoCommand = autonomous;
+  private Command autonomous;
 
   // private boolean drove = false;
 
@@ -98,6 +98,7 @@ public class Robot extends TimedRobot {
     //   // drove = true;
     //   // timer.reset();
     // }
+    autonomous.execute();
 
   }
 
