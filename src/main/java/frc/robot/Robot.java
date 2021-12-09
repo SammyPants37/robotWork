@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystem.DriveTrain;
-import frc.robot.subsystem.ballLoader;
+import frc.robot.subsystem.boxLoader;
 import edu.wpi.first.wpilibj.Timer;
 
 
@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private static DriveTrain drivetrain; // = new DriveTrain();
-  private static ballLoader ballLoader; // = new ballLoader();
+  private static boxLoader boxLoader; // = new ballLoader();
   private final XboxController controller = new XboxController(0);
   private final Timer timer = new Timer();
 
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
     timer.start();
     
     drivetrain = new DriveTrain();
-    ballLoader = new ballLoader();
+    boxLoader = new boxLoader();
   }
 
   /**
@@ -138,7 +138,7 @@ public class Robot extends TimedRobot {
     }
     DriveTrain.arcadeDrive(-speed, -rot);
     
-    ballLoader.setSpeed(-controller.getTriggerAxis(Hand.kRight));
+    boxLoader.setSpeed(-controller.getTriggerAxis(Hand.kRight));
   }
 
   @Override
