@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystem.DriveTrain;
 import frc.robot.subsystem.boxLoader;
+import frc.robot.subsystem.boxShooter;
 import edu.wpi.first.wpilibj.Timer;
 
 
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
 
   private static DriveTrain drivetrain; // = new DriveTrain();
   private static boxLoader boxLoader; // = new ballLoader();
+  private static boxShooter boxShooter;
   private final XboxController controller = new XboxController(0);
   private final Timer timer = new Timer();
 
@@ -49,6 +51,7 @@ public class Robot extends TimedRobot {
     
     drivetrain = new DriveTrain();
     boxLoader = new boxLoader();
+    boxShooter = new boxShooter();
   }
 
   /**
@@ -91,13 +94,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    // if (timer.get() < 2.0) {// & drove == false) {
-    //   DriveTrain.arcadeDrive(0.7, 0.0); // drive forwards half speed
-    // } else {
-    //   DriveTrain.stop(); // stop robot
-    //   // drove = true;
-    //   // timer.reset();
-    // }
     autonomous.execute();
 
   }
@@ -139,6 +135,7 @@ public class Robot extends TimedRobot {
     DriveTrain.arcadeDrive(-speed, -rot);
     
     boxLoader.setSpeed(-controller.getTriggerAxis(Hand.kRight));
+    boxShooter.setSpeed(-controller.getTriggerAxis(Hand.kLeft));
   }
 
   @Override
