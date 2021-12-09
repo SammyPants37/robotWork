@@ -132,10 +132,24 @@ public class Robot extends TimedRobot {
     } else if (rot <= -0.7) {
       rot = -0.7;
     }
-    DriveTrain.arcadeDrive(-speed, -rot);
+    DriveTrain.arcadeDrive(-speed, rot);
+    if (controller.getPOV() == -1) {
+      boxLoader.setSpeed(0);
+      boxShooter.setSpeed(0);
+    } else if (controller.getPOV() == 90) {
+      boxLoader.setSpeed(0);
+      boxShooter.setSpeed(0.5);
+    } else if (controller.getPOV() == 180) {
+      boxLoader.setSpeed(-0.5);
+      boxShooter.setSpeed(0);
+    } else if (controller.getPOV() == 270) {
+      boxLoader.setSpeed(0);
+      boxShooter.setSpeed(-0.5);
+    } else if (controller.getPOV() == 0) {
+      boxLoader.setSpeed(0.5);
+      boxShooter.setSpeed(0);
+    }
     
-    boxLoader.setSpeed(-controller.getTriggerAxis(Hand.kRight));
-    boxShooter.setSpeed(-controller.getTriggerAxis(Hand.kLeft));
   }
 
   @Override

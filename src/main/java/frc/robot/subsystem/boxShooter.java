@@ -8,7 +8,7 @@ public class boxShooter {
 
   public void setSpeed(double speed) {
     Motor1.setSpeed(speed);
-    Motor2.setSpeed(speed);
+    Motor2.setSpeed(-speed);
   }
 
   public void stop() {

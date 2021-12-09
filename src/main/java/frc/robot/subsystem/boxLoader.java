@@ -7,7 +7,7 @@ public class boxLoader {
   private static final Spark Motor2 = new Spark(5);
 
   public void setSpeed(double speed) {
-    Motor1.setSpeed(speed);
+    Motor1.setSpeed(-speed);
     Motor2.setSpeed(speed);
   }
 
